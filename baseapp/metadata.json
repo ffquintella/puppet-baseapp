@@ -6,6 +6,7 @@
       "version_requirement": ">= 8.0.0 < 10.0.0"
     }
   ],
+  "summary": "Standard /srv application directory layout for other Puppet app modules",
   "description": "Creates the standard /srv application directory layout (config, data, logs, scripts) consumed by other application modules.",
   "license": "Apache-2.0",
   "name": "ffquintella-baseapp",
