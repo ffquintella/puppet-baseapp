@@ -1,5 +1,5 @@
 {
-  "author": "Unknown",
+  "author": "ffquintella",
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
@@ -7,9 +7,8 @@
     }
   ],
   "description": "Creates the standard /srv application directory layout (config, data, logs, scripts) consumed by other application modules.",
-  "issues_url": "",
   "license": "Apache-2.0",
-  "name": "baseapp",
+  "name": "ffquintella-baseapp",
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
@@ -42,7 +41,8 @@
       "version_requirement": ">= 6.0.0 < 9.0.0"
     }
   ],
-  "project_page": "",
-  "source": "",
-  "version": "0.1.1"
+  "project_page": "https://github.com/ffquintella/puppet-baseapp",
+  "source": "https://github.com/ffquintella/puppet-baseapp",
+  "issues_url": "https://github.com/ffquintella/puppet-baseapp/issues",
+  "version": "0.2.0"
 }
