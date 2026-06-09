@@ -4,6 +4,10 @@
     {
       "name": "puppetlabs/stdlib",
       "version_requirement": ">= 8.0.0 < 10.0.0"
+    },
+    {
+      "name": "puppetlabs/concat",
+      "version_requirement": ">= 7.0.0 < 10.0.0"
     }
   ],
   "summary": "Standard /srv application directory layout for other Puppet app modules",
@@ -45,5 +49,5 @@
   "project_page": "https://github.com/ffquintella/puppet-baseapp",
   "source": "https://github.com/ffquintella/puppet-baseapp",
   "issues_url": "https://github.com/ffquintella/puppet-baseapp/issues",
-  "version": "0.2.1"
+  "version": "0.3.0"
 }

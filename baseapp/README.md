@@ -14,8 +14,13 @@ The module creates and manages ownership/mode on:
 - `/srv/application-logs`
 - `/srv/scripts`
 
-It also pulls in `puppetlabs/stdlib` for you, so consumers don't have to
-declare it themselves.
+It also pulls in `puppetlabs/stdlib` and `puppetlabs/concat` for you, so
+consumers don't have to declare them themselves.
+
+It additionally centralises the **subordinate UID/GID ranges** (`/etc/subuid`,
+`/etc/subgid`) that rootless containers need, so several rootless app modules on
+one node share a single, consistently-managed pair of files instead of fighting
+over them. See [Subordinate IDs](#subordinate-ids-etcsubuid--etcsubgid).
 
 ## Supported platforms
 
@@ -112,6 +117,32 @@ Per-node overrides:
 baseapp::owner: 'nginx'
 baseapp::group: 'nginx'
 ```
+
+## Subordinate IDs (`/etc/subuid` / `/etc/subgid`)
+
+System users are not auto-allocated subordinate UID/GID ranges, but rootless
+podman needs them to build its user namespace. When more than one rootless app
+runs on a node, each module appending its own range tends to clobber the others
+(a raw `usermod` append vs. another module's managed file). `baseapp` solves this
+by **owning** `/etc/subuid` and `/etc/subgid` as `concat` files and exposing a
+defined type so each app contributes one fragment:
+
+```puppet
+baseapp::subid { 'ferrogate':
+  subid => 655425536,   # first id of the block (start)
+  count => 65536,       # block size
+}
+```
+
+This writes `ferrogate:655425536:65536` to both files. Declare one per service
+user; pick non-overlapping blocks (a per-uid block such as `uid * 65536` is a
+convenient, collision-free convention).
+
+> **Single owner.** `baseapp` must be the only manager of these files. If the
+> `puppet/podman` module is also present on the node, leave its
+> `manage_subuid => false` (the default) so it does not declare its own
+> `Concat['/etc/subuid']`, which would collide. Use `baseapp::subid` in place of
+> `podman::subuid` / `podman::subgid`.
 
 ## Parameters
 
